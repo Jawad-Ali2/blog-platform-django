@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+        <div class="card" style="border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,.1);">
+            <div class="card-body p-5">
+                <div class="text-center mb-4">
+                    <div class="mb-3" style="font-size: 3rem; background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+                        <i class="bi bi-box-arrow-in-right"></i>
+                    </div>
+                    <h2 class="fw-bold mb-2" style="color: var(--text-dark);">Welcome Back!</h2>
+                    <p class="text-muted">Please login to your account</p>
+                </div>
+                
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    <div class="mb-4">
+                        <label for="username" class="form-label fw-semibold">Username</label>
+                        <input type="text" class="form-control form-control-lg" id="username" name="username" 
+                               placeholder="Enter your username" required
+                               style="border-radius: 12px; padding: 0.875rem 1.25rem;">
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label for="password" class="form-label fw-semibold">Password</label>
+                        <input type="password" class="form-control form-control-lg" id="password" name="password" 
+                               placeholder="Enter your password" required
+                               style="border-radius: 12px; padding: 0.875rem 1.25rem;">
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary w-100 btn-lg mb-3" style="border-radius: 12px; padding: 0.875rem;">
+                        <i class="bi bi-box-arrow-in-right"></i> Login to Account
+                    </button>
+                </form>
+                
+                <div class="text-center mt-4">
+                    <p class="text-muted mb-0">
+                        Don't have an account? 
+                        <a href="{% url 'accounts:register' %}" style="color: var(--primary-blue); font-weight: 600; text-decoration: none;">
+                            Create one now
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="text-center mt-4">
+            <a href="{% url 'blog:home' %}" class="text-muted text-decoration-none">
+                <i class="bi bi-arrow-left"></i> Back to Home
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

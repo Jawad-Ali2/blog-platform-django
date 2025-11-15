@@ -1,0 +1,204 @@
+/* Additional custom styles for enhanced UI */
+
+/* Smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Custom scrollbar for webkit browsers */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, #5568d3, #653d8c);
+}
+
+/* Form enhancements */
+.form-control, .form-select {
+    border-radius: 8px;
+    border: 2px solid #e2e8f0;
+    padding: 0.75rem 1rem;
+    transition: all 0.2s;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--primary-blue);
+    box-shadow: 0 0 0 0.2rem rgba(91, 114, 238, 0.15);
+}
+
+/* Button enhancements */
+.btn {
+    border-radius: 8px;
+    font-weight: 600;
+    padding: 0.625rem 1.25rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-warning {
+    background: linear-gradient(135deg, #FFE66D, #FF8B5A);
+    border: none;
+    color: #2D3748;
+}
+
+.btn-warning:hover {
+    background: linear-gradient(135deg, #FFD93D, #FF7A3A);
+    color: #2D3748;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(255, 139, 90, 0.3);
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, #FF6B6B, #EE5A6F);
+    border: none;
+}
+
+.btn-danger:hover {
+    background: linear-gradient(135deg, #FF5555, #DD4A5F);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(255, 107, 107, 0.3);
+}
+
+.btn-success {
+    background: linear-gradient(135deg, #4ECDC4, #44A08D);
+    border: none;
+}
+
+.btn-success:hover {
+    background: linear-gradient(135deg, #3EB8AF, #3A9180);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(78, 205, 196, 0.3);
+}
+
+/* Alert enhancements */
+.alert {
+    border: none;
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+}
+
+.alert-success {
+    background: linear-gradient(135deg, rgba(78, 205, 196, 0.15), rgba(68, 160, 141, 0.15));
+    color: #2D5F5D;
+}
+
+.alert-danger {
+    background: linear-gradient(135deg, rgba(255, 107, 107, 0.15), rgba(238, 90, 111, 0.15));
+    color: #8B2635;
+}
+
+.alert-warning {
+    background: linear-gradient(135deg, rgba(255, 230, 109, 0.15), rgba(255, 139, 90, 0.15));
+    color: #8B5A00;
+}
+
+.alert-info {
+    background: linear-gradient(135deg, rgba(91, 114, 238, 0.15), rgba(107, 95, 237, 0.15));
+    color: #3730A3;
+}
+
+/* Loading animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card {
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* Hover effects for links */
+a {
+    transition: all 0.2s;
+}
+
+/* Table styling */
+.table {
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.table thead {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+}
+
+/* Dashboard cards */
+.dashboard-card {
+    background: linear-gradient(135deg, rgba(91, 114, 238, 0.05), rgba(107, 95, 237, 0.05));
+    border-left: 4px solid var(--primary-blue);
+}
+
+/* Profile page enhancements */
+.profile-header {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border-radius: 16px;
+    padding: 2rem;
+    color: white;
+    margin-bottom: 2rem;
+}
+
+/* Code block styling */
+pre {
+    background: #2D3748;
+    border-radius: 8px;
+    padding: 1.5rem;
+    overflow-x: auto;
+}
+
+code {
+    background: rgba(91, 114, 238, 0.1);
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    color: var(--primary-purple);
+}
+
+/* Blockquote styling */
+blockquote {
+    border-left: 4px solid var(--primary-blue);
+    padding-left: 1.5rem;
+    margin: 1.5rem 0;
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2rem !important;
+    }
+    
+    .hero-subtitle {
+        font-size: 1rem !important;
+    }
+    
+    .topic-pills {
+        justify-content: flex-start;
+    }
+    
+    .card-body {
+        padding: 1.5rem !important;
+    }
+}
+
+/* Print styles */
+@media print {
+    .navbar, footer, .comment-section, .btn {
+        display: none;
+    }
+}

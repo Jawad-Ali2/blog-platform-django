@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{{ title }}{% endblock %} - Advanced Blog</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+    
+    <style>
+        :root {
+            --primary-blue: #5B72EE;
+            --primary-purple: #6B5FED;
+            --accent-coral: #FF6B6B;
+            --accent-teal: #4ECDC4;
+            --accent-yellow: #FFE66D;
+            --accent-pink: #FF6AC1;
+            --accent-orange: #FF8B5A;
+            --text-dark: #2D3748;
+            --text-muted: #718096;
+            --bg-light: #F7FAFC;
+            --bg-white: #FFFFFF;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+        
+        .navbar {
+            background: var(--bg-white);
+            box-shadow: 0 1px 3px rgba(0,0,0,.05);
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(0,0,0,.05);
+        }
+        
+        .navbar-brand {
+            color: var(--text-dark) !important;
+            font-weight: 700;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .navbar-brand i {
+            color: var(--primary-blue);
+        }
+        
+        .nav-link {
+            color: var(--text-dark) !important;
+            font-weight: 500;
+            padding: 0.5rem 1rem !important;
+            transition: color 0.2s;
+        }
+        
+        .nav-link:hover {
+            color: var(--primary-blue) !important;
+        }
+        
+        .navbar-dark .nav-link {
+            color: var(--text-dark) !important;
+        }
+        
+        .card {
+            border: none;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px rgba(0,0,0,.05);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+            background: var(--bg-white);
+        }
+        
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,.1);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-purple));
+            border: none;
+            border-radius: 8px;
+            padding: 0.6rem 1.5rem;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(91, 114, 238, 0.3);
+        }
+        
+        .badge {
+            padding: 0.5em 1em;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.75rem;
+            letter-spacing: 0.3px;
+        }
+        
+        .badge.bg-technology { background: linear-gradient(135deg, #667eea, #764ba2) !important; }
+        .badge.bg-travel { background: linear-gradient(135deg, #f093fb, #f5576c) !important; }
+        .badge.bg-sport { background: linear-gradient(135deg, #4facfe, #00f2fe) !important; }
+        .badge.bg-business { background: linear-gradient(135deg, #43e97b, #38f9d7) !important; }
+        .badge.bg-news { background: linear-gradient(135deg, #fa709a, #fee140) !important; }
+        .badge.bg-trends { background: linear-gradient(135deg, #30cfd0, #330867) !important; }
+        .badge.bg-startups { background: linear-gradient(135deg, #a8edea, #fed6e3) !important; }
+        .badge.bg-management { background: linear-gradient(135deg, #ff9a9e, #fecfef) !important; }
+        
+        footer {
+            background: var(--text-dark);
+            color: white;
+            margin-top: 80px;
+            padding: 3rem 0;
+        }
+        
+        .post-image {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+        
+        .card:hover .post-image {
+            transform: scale(1.05);
+        }
+        
+        .comment-section {
+            background-color: var(--bg-light);
+            padding: 30px;
+            border-radius: 16px;
+            margin-top: 40px;
+        }
+        
+        .hero-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 80px 0;
+            color: white;
+            margin-bottom: 60px;
+            border-radius: 0 0 40px 40px;
+        }
+        
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.25rem;
+            font-weight: 400;
+            opacity: 0.95;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .category-badge-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .post-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+        
+        .post-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            line-height: 1.4;
+            color: var(--text-dark);
+            margin: 1rem 0;
+            transition: color 0.2s;
+        }
+        
+        .post-title:hover {
+            color: var(--primary-blue);
+        }
+        
+        .post-excerpt {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        
+        .search-form {
+            max-width: 500px;
+        }
+        
+        .search-form input {
+            border-radius: 25px;
+            padding: 0.6rem 1.2rem;
+            border: 2px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.1);
+            color: white;
+        }
+        
+        .search-form input::placeholder {
+            color: rgba(255,255,255,0.7);
+        }
+        
+        .search-form input:focus {
+            background: rgba(255,255,255,0.2);
+            border-color: rgba(255,255,255,0.4);
+            color: white;
+        }
+        
+        .search-form button {
+            border-radius: 25px;
+            padding: 0.6rem 1.5rem;
+            background: rgba(255,255,255,0.2);
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+        
+        .search-form button:hover {
+            background: rgba(255,255,255,0.3);
+        }
+        
+        .topic-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin: 2rem 0;
+        }
+        
+        .topic-pill {
+            padding: 0.6rem 1.5rem;
+            border-radius: 25px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .topic-pill:hover {
+            background: rgba(255,255,255,0.3);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .pagination .page-link {
+            border-radius: 8px;
+            margin: 0 0.25rem;
+            border: none;
+            color: var(--text-dark);
+            font-weight: 600;
+        }
+        
+        .pagination .page-item.active .page-link {
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-purple));
+            border: none;
+        }
+        
+        .btn-outline-light {
+            border-color: rgba(255,255,255,0.3);
+        }
+        
+        .btn-outline-light:hover {
+            background: rgba(255,255,255,0.2);
+            border-color: rgba(255,255,255,0.5);
+        }
+        
+        .dropdown-menu {
+            border-radius: 12px;
+            border: none;
+            box-shadow: 0 10px 40px rgba(0,0,0,.1);
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 0.2rem rgba(91, 114, 238, 0.25);
+        }
+    </style>
+    
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'blog:home' %}">
+                <i class="bi bi-pencil-square"></i> 
+                <span style="background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Heartfelt</span> Reflections
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto ms-4">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'blog:home' %}">
+                            <i class="bi bi-house-door"></i> Home
+                        </a>
+                    </li>
+                    {% if user.is_authenticated and user.profile.is_author %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'blog:dashboard' %}">
+                            <i class="bi bi-speedometer2"></i> Dashboard
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+                
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'blog:search' %}">
+                            <i class="bi bi-search"></i> Search
+                        </a>
+                    </li>
+                    {% if user.is_authenticated %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
+                            <i class="bi bi-person-circle"></i> {{ user.username }}
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="{% url 'accounts:profile' %}"><i class="bi bi-person"></i> Profile</a></li>
+                            {% if user.profile.is_author %}
+                            <li><a class="dropdown-item" href="{% url 'blog:create_post' %}"><i class="bi bi-plus-circle"></i> New Post</a></li>
+                            {% endif %}
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="{% url 'accounts:logout' %}"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
+                        </ul>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'accounts:login' %}">
+                            <i class="bi bi-box-arrow-in-right"></i> Login
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-primary ms-2" href="{% url 'accounts:register' %}">
+                            Buy Now
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Messages -->
+    {% if messages %}
+    <div class="container mt-3">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Main Content -->
+    <main class="container my-5">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <h5 class="mb-3">
+                        <i class="bi bi-pencil-square"></i> 
+                        <span style="background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Heartfelt</span> Reflections
+                    </h5>
+                    <p class="text-white-50">Welcome to ultimate source for fresh perspectives! Explore curated content to enlighten, entertain and engage global readers.</p>
+                    <div class="d-flex gap-3 mt-3">
+                        <a href="#" class="text-white"><i class="bi bi-facebook" style="font-size: 1.5rem;"></i></a>
+                        <a href="#" class="text-white"><i class="bi bi-twitter" style="font-size: 1.5rem;"></i></a>
+                        <a href="#" class="text-white"><i class="bi bi-instagram" style="font-size: 1.5rem;"></i></a>
+                        <a href="#" class="text-white"><i class="bi bi-linkedin" style="font-size: 1.5rem;"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <h6 class="mb-3">Categories</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Technology</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Travel</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Business</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Sport</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <h6 class="mb-3">Pages</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="{% url 'blog:home' %}" class="text-white-50 text-decoration-none">Home</a></li>
+                        <li class="mb-2"><a href="{% url 'accounts:register' %}" class="text-white-50 text-decoration-none">Register</a></li>
+                        <li class="mb-2"><a href="{% url 'accounts:login' %}" class="text-white-50 text-decoration-none">Login</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4" style="border-color: rgba(255,255,255,0.1);">
+            <div class="text-center text-white-50">
+                <p class="mb-0">&copy; 2024 - Heartfelt Reflections. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

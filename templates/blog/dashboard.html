@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h1 class="display-5 mb-4">
+            <i class="bi bi-speedometer2"></i> Author Dashboard
+        </h1>
+        
+        <div class="mb-4">
+            <a href="{% url 'blog:create_post' %}" class="btn btn-primary">
+                <i class="bi bi-plus-circle"></i> Create New Post
+            </a>
+        </div>
+        
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">Your Posts</h4>
+            </div>
+            <div class="card-body">
+                {% if posts %}
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Category</th>
+                                <th>Status</th>
+                                <th>Created</th>
+                                <th>Comments</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for post in posts %}
+                            <tr>
+                                <td>
+                                    <a href="{% url 'blog:post_detail' post.slug %}" class="text-decoration-none">
+                                        {{ post.title }}
+                                    </a>
+                                </td>
+                                <td>
+                                    {% if post.category %}
+                                    <span class="badge bg-primary">{{ post.category.name }}</span>
+                                    {% else %}
+                                    <span class="text-muted">-</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if post.status == 'published' %}
+                                    <span class="badge bg-success">Published</span>
+                                    {% else %}
+                                    <span class="badge bg-warning text-dark">Draft</span>
+                                    {% endif %}
+                                </td>
+                                <td>{{ post.created_at|date:"M d, Y" }}</td>
+                                <td>
+                                    <span class="badge bg-info">{{ post.comments.count }}</span>
+                                </td>
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        <a href="{% url 'blog:post_detail' post.slug %}" class="btn btn-info" title="View">
+                                            <i class="bi bi-eye"></i>
+                                        </a>
+                                        <a href="{% url 'blog:edit_post' post.slug %}" class="btn btn-warning" title="Edit">
+                                            <i class="bi bi-pencil"></i>
+                                        </a>
+                                        <a href="{% url 'blog:delete_post' post.slug %}" class="btn btn-danger" title="Delete">
+                                            <i class="bi bi-trash"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="alert alert-info">
+                    <i class="bi bi-info-circle"></i> You haven't created any posts yet. 
+                    <a href="{% url 'blog:create_post' %}">Create your first post!</a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        
+        <!-- Statistics -->
+        <div class="row mt-4">
+            <div class="col-md-4">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h2 class="text-primary">{{ posts.count }}</h2>
+                        <p class="text-muted mb-0">Total Posts</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h2 class="text-success">{{ posts|length }}</h2>
+                        <p class="text-muted mb-0">Published Posts</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h2 class="text-info">0</h2>
+                        <p class="text-muted mb-0">Total Views</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
