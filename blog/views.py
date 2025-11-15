@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.core.paginator import Paginator
 from django.db.models import Q
 from .models import Post, Category, Tag, Comment
-from .forms import PostForm, CommentForm, SearchForm
+from .forms import PostForm, CommentForm, SearchForm, CategoryForm, TagForm
 
 
 def home(request):
@@ -222,3 +222,124 @@ def delete_comment(request, comment_id):
     comment.delete()
     messages.success(request, 'Comment deleted successfully!')
     return redirect('blog:post_detail', slug=post_slug)
+
+
+@login_required
+def manage_categories(request):
+    """Manage categories (view and create)"""
+    if not request.user.profile.is_author:
+        messages.error(request, 'You need author privileges to manage categories.')
+        return redirect('blog:home')
+    
+    categories = Category.objects.all()
+    
+    if request.method == 'POST':
+        form = CategoryForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Category created successfully!')
+            return redirect('blog:manage_categories')
+    else:
+        form = CategoryForm()
+    
+    context = {
+        'categories': categories,
+        'form': form,
+        'title': 'Manage Categories'
+    }
+    return render(request, 'blog/manage_categories.html', context)
+
+
+@login_required
+def edit_category(request, pk):
+    """Edit a category"""
+    if not request.user.profile.is_author:
+        messages.error(request, 'You need author privileges to edit categories.')
+        return redirect('blog:home')
+    
+    category = get_object_or_404(Category, pk=pk)
+    
+    if request.method == 'POST':
+        form = CategoryForm(request.POST, instance=category)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Category updated successfully!')
+            return redirect('blog:manage_categories')
+    else:
+        form = CategoryForm(instance=category)
+    
+    context = {
+        'form': form,
+        'category': category,
+        'title': f'Edit Category: {category.name}'
+    }
+    return render(request, 'blog/edit_category.html', context)
+
+
+@login_required
+def delete_category(request, pk):
+    """Delete a category"""
+    if not request.user.profile.is_author:
+        messages.error(request, 'You need author privileges to delete categories.')
+        return redirect('blog:home')
+    
+    category = get_object_or_404(Category, pk=pk)
+    
+    if request.method == 'POST':
+        category.delete()
+        messages.success(request, 'Category deleted successfully!')
+        return redirect('blog:manage_categories')
+    
+    context = {
+        'category': category,
+        'title': f'Delete Category: {category.name}'
+    }
+    return render(request, 'blog/delete_category.html', context)
+
+
+@login_required
+def manage_tags(request):
+    """Manage tags (view and create)"""
+    if not request.user.profile.is_author:
+        messages.error(request, 'You need author privileges to manage tags.')
+        return redirect('blog:home')
+    
+    tags = Tag.objects.all()
+    
+    if request.method == 'POST':
+        form = TagForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Tag created successfully!')
+            return redirect('blog:manage_tags')
+    else:
+        form = TagForm()
+    
+    context = {
+        'tags': tags,
+        'form': form,
+        'title': 'Manage Tags'
+    }
+    return render(request, 'blog/manage_tags.html', context)
+
+
+@login_required
+def delete_tag(request, pk):
+    """Delete a tag"""
+    if not request.user.profile.is_author:
+        messages.error(request, 'You need author privileges to delete tags.')
+        return redirect('blog:home')
+    
+    tag = get_object_or_404(Tag, pk=pk)
+    
+    if request.method == 'POST':
+        tag.delete()
+        messages.success(request, 'Tag deleted successfully!')
+        return redirect('blog:manage_tags')
+    
+    context = {
+        'tag': tag,
+        'title': f'Delete Tag: {tag.name}'
+    }
+    return render(request, 'blog/delete_tag.html', context)
+

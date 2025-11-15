@@ -1,5 +1,26 @@
 from django import forms
-from .models import Post, Comment
+from .models import Post, Comment, Category, Tag
+
+
+class CategoryForm(forms.ModelForm):
+    """Form for creating and editing categories"""
+    class Meta:
+        model = Category
+        fields = ['name', 'description']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter category name'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 3, 'placeholder': 'Optional description'}),
+        }
+
+
+class TagForm(forms.ModelForm):
+    """Form for creating and editing tags"""
+    class Meta:
+        model = Tag
+        fields = ['name']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter tag name'}),
+        }
 
 
 class PostForm(forms.ModelForm):

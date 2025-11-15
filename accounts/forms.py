@@ -10,7 +10,7 @@ class UserRegistrationForm(UserCreationForm):
     first_name = forms.CharField(max_length=100, required=False, widget=forms.TextInput(attrs={'class': 'form-control'}))
     last_name = forms.CharField(max_length=100, required=False, widget=forms.TextInput(attrs={'class': 'form-control'}))
     role = forms.ChoiceField(
-        choices=[('reader', 'Reader'), ('author', 'Author')],
+        choices=[('reader', 'reader'), ('author', 'author')],
         widget=forms.Select(attrs={'class': 'form-select'})
     )
     

@@ -14,4 +14,13 @@ urlpatterns = [
     path('category/<slug:slug>/', views.category_posts, name='category_posts'),
     path('tag/<slug:slug>/', views.tag_posts, name='tag_posts'),
     path('comment/<int:comment_id>/delete/', views.delete_comment, name='delete_comment'),
+    
+    # Category management
+    path('categories/', views.manage_categories, name='manage_categories'),
+    path('categories/<int:pk>/edit/', views.edit_category, name='edit_category'),
+    path('categories/<int:pk>/delete/', views.delete_category, name='delete_category'),
+    
+    # Tag management
+    path('tags/', views.manage_tags, name='manage_tags'),
+    path('tags/<int:pk>/delete/', views.delete_tag, name='delete_tag'),
 ]

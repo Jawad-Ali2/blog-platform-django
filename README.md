@@ -2,17 +2,6 @@
 
 A beautiful, full-featured blog platform built with Django featuring modern UI design inspired by contemporary blog layouts, user authentication, role-based permissions, comments, categories, tags, and advanced search functionality.
 
-## ✨ Features
-
-### Modern UI Design
-- **Gradient Hero Section**: Eye-catching hero with search functionality
-- **Card-Based Layout**: Beautiful card designs with hover animations
-- **Colorful Category Badges**: Vibrant gradient badges for different categories
-- **Responsive Design**: Mobile-first approach with Bootstrap 5
-- **Modern Typography**: Inter font family for clean, readable text
-- **Smooth Animations**: Elegant transitions and hover effects
-- **Newsletter Section**: Integrated email subscription area
-
 ### Core Features
 - User Authentication (Register/Login/Logout)
 - Role-based Permissions (Admin, Author, Reader)
@@ -44,11 +33,6 @@ python -m venv venv
 **Windows:**
 ```bash
 venv\Scripts\activate
-```
-
-**Linux/Mac:**
-```bash
-source venv/bin/activate
 ```
 
 ### 4. Install Dependencies
